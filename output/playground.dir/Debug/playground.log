@@ -1,0 +1,202 @@
+﻿  GameData.cpp
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(17,62): warning C4244: "Argument": Konvertierung von "T" in "const unsigned __int64", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(18,25): warning C4244: "Argument": Konvertierung von "T" in "const unsigned __int64", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(18,40): warning C4244: "Argument": Konvertierung von "T" in "const unsigned __int64", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(23,20): warning C4244: "Argument": Konvertierung von "T" in "const unsigned __int64", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(23,35): warning C4244: "Argument": Konvertierung von "T" in "const unsigned __int64", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(61,17): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(62,20): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(66,17): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(67,20): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(71,17): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(72,20): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(76,17): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(77,20): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(94,16): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(95,19): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(99,16): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(100,19): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(104,16): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(105,19): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(109,16): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(110,19): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(121,15): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(127,17): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(128,20): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(131,17): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(132,20): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(136,17): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(137,20): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(140,17): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(141,20): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(155,18): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(156,21): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(162,18): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(163,21): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(170,18): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(171,21): warning C4305: "+=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(178,18): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(179,21): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(192,17): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\playground\GameData.cpp(241,15): warning C4305: "-=": Verkürzung von "double" in "T"
+          with
+          [
+              T=float
+          ]
+  playground.vcxproj -> C:\Users\Lukas\CLionProjects\THU\CG\OpenGL-RenderingMultipleObjects\output\Debug\playground.exe
