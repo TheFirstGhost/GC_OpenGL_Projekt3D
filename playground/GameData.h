@@ -33,6 +33,7 @@ public:
 	World(std::shared_ptr <RenderingObject> _worldObject, std::vector<std::vector<int>> _map, int cubePosX, int cubePosY, int cubePosZ);
 	bool checkFallDown(void);
 	bool checkWin(void);
+	glm::vec3 getFinish(void);
 
 private:
 
@@ -63,7 +64,7 @@ public:
 	bool roleFinish( void );
 	void fall();
 	void reset();
-	void setColor(GLuint programID);
+	void won();
 	
 private:
 	int calculateRotPos( void );

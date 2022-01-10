@@ -20,8 +20,18 @@ bool World::checkFallDown() {
 }
 
 bool World::checkWin() {
-	if (map[cubePos.x - 1][cubePos.y - 1] == -2) return true;
+	if (map[cubePos.x - 1][cubePos.y - 1] <= -10) return true;
 	else return false;
+}
+
+glm::vec3 World::getFinish() {
+	glm::vec3 finish;
+	for (int x = 0; x < map.size(); x++) {
+		for (int y = 0; y < map[x].size(); y++) {
+			if (map[x][y] <= -10) return glm::vec3(x, y, map[x][y] + 11);
+		}
+	}
+	return glm::vec3(-100, -100, 100);
 }
 
 
@@ -155,6 +165,7 @@ bool Cube::roleFinish() {
 				pos.z -= 0.02;
 				rot.x += 0.00157;
 			}
+			else return true;
 		}
 		else if (lastDirection == BACKWARD) {
 			setRotPosOffset(BACKWARD);
@@ -162,22 +173,25 @@ bool Cube::roleFinish() {
 				pos.z -= 0.02;
 				rot.x -= 0.00157;
 			}
+			else return true;
 		}
 		else if (lastDirection == LEFT) {
 			lastLevel = currLevel;
-			if (((int)pos.y - 10) % 20 > 0) {
+			if (((int)pos.z - 10) % 20 > 0) {
 				//pos.y -= 0.02;
 				pos.z -= 0.02;
 				rot.y += 0.00157;
 			}
+			else return true;
 		}
 		else if (lastDirection == RIGHT) {
 			lastLevel = currLevel;
-			if (((int)pos.y - 10) % 20 > 0) {
+			if (((int)pos.z - 10) % 20 > 0) {
 				//pos.y -= 0.02;
 				pos.z -= 0.02;
 				rot.y -= 0.00157;
 			}
+			else return true;
 		}
 		else {
 			rotPos = calculateRotPos();
@@ -244,6 +258,10 @@ void Cube::fall() {
 	//std::cout << "Fall Down" << "\n";
 }
 
+void Cube::won() {
+	pos.z += 0.01;
+}
+
 void Cube::reset() {
 	pos.x = 40;
 	pos.y = 60;
@@ -253,20 +271,6 @@ void Cube::reset() {
 	rotPosOffset = 0;
 	lastLevel = 1;
 	currLevel = 1;
-}
-
-void Cube::setColor(GLuint programID) {
-	cubeObject->textureSamplerID = glGetUniformLocation(programID, "myTextureSampler");
-	time_t now = time(nullptr);
-	float time = 0.5f;
-	std::vector< glm::vec2 > uvbufferdata;
-	uvbufferdata.push_back({ 0.0f, 0.0f });
-	uvbufferdata.push_back({ 0.0f, time });
-	uvbufferdata.push_back({ time, time });
-	uvbufferdata.push_back({ 0.0f,0.0f });
-	uvbufferdata.push_back({ time, time });
-	uvbufferdata.push_back({ time ,0.0f });
-	cubeObject->SetTexture(uvbufferdata, "brick_2.bmp");
 }
 
 /*bool Cube::checkNextCubePos(const int dir, std::shared_ptr<World> world, std::shared_ptr<Cube> cube) {

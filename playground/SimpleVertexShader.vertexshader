@@ -2,18 +2,20 @@
 // Input vertex data, different for all executions of this shader.
 layout(location = 0) in vec3 vertexPosition_modelspace;
 layout(location = 1) in vec3 vertexNormal_modelspace;
-layout(location = 2) in vec2 vertexUV;
+layout(location = 2) in vec4 vertexColor;
 
 // Values that stay constant for the whole mesh.
 uniform mat4 M;
 uniform mat4 V;
 uniform mat4 P;
 
+uniform float myTime;
+
 //Output variables
 out vec3 fNormal;
 out vec3 fPosition;
 out vec3 fLight;
-out vec2 UV;
+out vec3 vColor;
 
 void main(){
 	
@@ -31,8 +33,16 @@ void main(){
 
 	// Output position of the vertex, in clip space : MVP * position
 	gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
-
+	if(vertexColor[3] > 0.0){
+		vColor.r = vertexColor.r * abs(sin(myTime*(vertexColor[3]*10)));
+		vColor.g = vertexColor.g * abs(sin(myTime*(vertexColor[3]*10)+1.047));
+		vColor.b = vertexColor.b * abs(sin(myTime*(vertexColor[3]*10)-1.047));
+	}
+	else{
+		vColor = vertexColor.rgb;
+	}
+	
 	// UV of the vertex. No special space for this one.
-	UV = vertexUV;
+	//UV = vertexUV;
 }
 

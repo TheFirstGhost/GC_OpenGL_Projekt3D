@@ -163,10 +163,22 @@ void updateAnimationLoop()
 
   // Use our shader
   glUseProgram(programID);
+
+  float timeValue = glfwGetTime();
+  int vertexColorLocation = glGetUniformLocation(programID, "myTime");
+  glUniform1f(vertexColorLocation, timeValue);
+
   if (falling) {
 	  cube.fall();
 	  if (cube.pos.z < -80) {
 		  falling = false;
+		  cube.reset();
+	  }
+  }
+  else if (won) {
+	  cube.won();
+	  if (cube.pos.z > 100) {
+		  won = false;
 		  cube.reset();
 	  }
   }
@@ -201,7 +213,10 @@ void updateAnimationLoop()
 	  if (cube.roleFinish()) {
 		  lastKey = 0;
 		  if (world.checkFallDown()) falling = true;
-		  else if (world.checkWin()) std::cout << "Winning" << "\n";
+		  else if (world.checkWin()) {
+			  std::cout << "Won\n";
+			  won = true;
+		  }
 	  }
 	  cycle = 0;
 	  world.cubePos.x = (int)(round(cube.pos.x) / 20);
@@ -218,16 +233,18 @@ void updateAnimationLoop()
   initializeMVPTransformation();
   
   if (i++ == 5000) {
-      //std::cout << "POS_X: " << cube.pos.x << "\n";
+      std::cout << "POS_X: " << cube.pos.y << "\n";
 	  //std::cout << "ROT_X: " << cube.rot.x << "\n";
       //std::cout << "CUBE_POS_X: " << world.cubePos.x << "\n";
       //std::cout << "CUBE_POS_Y: " << world.cubePos.y << "\n";
 	  std::cout << "WORLD_CUBEPOS_Z: " << world.cubePos.z << "\n";
 	  std::cout << "CUBE_POS_Z:" << cube.pos.z << "\n";
-      std::cout << "CUBE_ROTPOS: " << cube.rotPos << "\n";
-	  std::cout << "CUBE_ROTPOSOFFSET: " << cube.rotPosOffset << "\n";
-	  //std::cout << "CUBE_LASTLEVEL:" << cube.lastLevel << "\n";
-	  //std::cout << "CUBE_CURRLEVEL:" << cube.currLevel << "\n";
+      //std::cout << "CUBE_ROTPOS: " << cube.rotPos << "\n";
+	  //std::cout << "CUBE_ROTPOSOFFSET: " << cube.rotPosOffset << "\n";
+	  std::cout << "CUBE_LASTLEVEL: " << cube.lastLevel << "\n";
+	  std::cout << "CUBE_CURRLEVEL: " << cube.currLevel << "\n";
+	  std::cout << "LASTKEY: " << lastKey << "\n";
+	  //std::cout << "Time: " << timeValue << "\n";
       i = 0;
   }
   // Send our transformation to the currently bound shader, 
@@ -238,6 +255,9 @@ void updateAnimationLoop()
   ground.DrawObject();
   
   worldObj.DrawObject();
+
+  glUniformMatrix4fv(Model_Matrix_ID, 1, GL_FALSE, &finish.M[0][0]);
+  finish.DrawObject();
 
   updataMovingObjectTransformation();
   glUniformMatrix4fv(Model_Matrix_ID, 1, GL_FALSE, &cubeObj.M[0][0]);
@@ -318,7 +338,7 @@ bool initializeMVPTransformation()
    
   // Camera matrix
   V = glm::lookAt(
-    glm::vec3(cube.pos.x-100, 200, cube.pos.y+cam_z), // Camera is at (4,3,-3), in World Space
+    glm::vec3(cube.pos.x-200, 200, cube.pos.y+cam_z), // Camera is at (4,3,-3), in World Space
     glm::vec3(cube.pos.x, 0, cube.pos.y), // and looks at the origin
     glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
   );
@@ -364,18 +384,45 @@ bool initializeVertexbuffer()
   cubeObj = RenderingObject();
   cubeObj.InitializeVAO();
   cubeObj.LoadSTL("Cube.stl");
+  cubeObj.SetColor(1.0, 1.0, 1.0, 0.7); //If Speed is greater then 0. Colors change.
   cube = Cube(std::make_shared<RenderingObject>(cubeObj), 40, 60, 30);
-  cube.setColor(programID);
   //testCube = new std::make_shared<Cube>(tempCube);
 
   worldObj = RenderingObject();
   worldObj.InitializeVAO();
   worldObj.LoadSTL("World1.stl");
   world = World(std::make_shared<RenderingObject>(worldObj), map1, 1, 3, 0);
-  //world.test = &map;
+
+  makeFinish();
 
 
   return true;
+}
+
+void makeFinish() {
+	finish = RenderingObject();
+	finish.InitializeVAO();
+	finish.LoadSTL("Cube.stl");
+	finish.SetColor(1.0, 1.0, 1.0, 0.8); //If Speed is greater then 0. Colors change.
+	glm::vec3 pos = world.getFinish();
+	std::cout << pos.y * 20 << "\n";
+	finish.M = glm::translate(glm::mat4(1.0f), { pos.x * 20 + 20, pos.z * 20 - 9, pos.y * 20 + 20});
+
+	/*std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
+	glm::vec3 pos = world.getFinish();
+	vertices.push_back({ pos.x * 20, pos.y * 20, pos.z * 20 + 12 });
+	vertices.push_back({ pos.x * 20 + 20, pos.y * 20, pos.z * 20 + 12 });
+	vertices.push_back({ pos.x * 20, pos.y * 20 + 20, pos.z * 20 + 12 });
+	vertices.push_back({ pos.x * 20, pos.y * 20 + 20, pos.z * 20 + 12 });
+	vertices.push_back({ pos.x * 20 + 20, pos.y * 20, pos.z * 20 + 12 });
+	vertices.push_back({ pos.x * 20 + 20, pos.y * 20 + 20, pos.z * 20 + 12 });
+	finish.SetVertices(vertices);
+
+	std::vector< glm::vec3 > normals = std::vector< glm::vec3 >();
+	finish.computeVertexNormalsOfTriangles(vertices, normals);
+	finish.SetNormals(normals);
+
+	finish.SetColor(1.0, 1.0, 1.0, 0.7);*/
 }
 
 bool cleanupVertexbuffer()

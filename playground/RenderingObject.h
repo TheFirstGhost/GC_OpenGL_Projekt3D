@@ -17,6 +17,7 @@ public:
   void SetNormals(std::vector< glm::vec3 >);
   void SetTexture(std::vector< glm::vec2 >, GLubyte texturedata[]);
   void SetTexture(std::vector< glm::vec2 >, std::string bmpPath);
+  void SetColor(float r, float g, float b, float speed);
   void DrawObject();
   void LoadSTL(std::string);
 
@@ -30,11 +31,14 @@ public:
   //normals VBO
   GLuint normalbuffer;
   
+  GLuint colorbuffer;
+
   //texture
   GLuint uvbuffer;
   GLuint texID;
   GLuint textureSamplerID;
   bool texture_present;
+  //bool colore_set;
 
   //Model matrix: moves object from model to world space
   glm::mat4 M;
@@ -46,10 +50,12 @@ public:
   */
   void computeVertexNormalsOfTriangles(std::vector< glm::vec3 >& vertices, std::vector< glm::vec3 >& normals);
 
-protected:
+private:
+	glm::vec3 color;
 
-  std::vector<glm::vec3> getAllTriangleNormalsForVertex(stl::point vertex, std::vector<stl::triangle> triangles);
-  glm::vec3 computeMeanVector(std::vector<glm::vec3>);
+protected:
+	std::vector<glm::vec3> getAllTriangleNormalsForVertex(stl::point vertex, std::vector<stl::triangle> triangles);
+	glm::vec3 computeMeanVector(std::vector<glm::vec3>);
   
 
 };

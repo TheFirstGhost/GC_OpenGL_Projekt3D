@@ -24,6 +24,7 @@ GLuint Projection_Matrix_ID;
 glm::mat4 P;
 GLuint Model_Matrix_ID;
 
+RenderingObject finish;
 RenderingObject ground;
 
 RenderingObject cubeObj;
@@ -72,7 +73,7 @@ std::vector<std::vector<int>> map1 = {
 	{ -1, 4, 4, 4, 1, 1, 1 },
 	{ -1, 4, 4, 4, 1, 1, 1 },
 	{ -1, 4, 4, 4, 1, 1, 1, -1, -1, 1, 1, 1 },
-	{ 4, 4, 4, 1, 1, 1, 1, -1, -1, 1, -2, 1 },
+	{ 4, 4, 4, 1, 1, 1, 1, -1, -1, 1, -10, 1 },
 	{ 4, 4, 4, 1, 1, 1, 1, -1, -1, 1, 1, 1 },
 	{ 4, 4, 4, 1, 1, 1, 1, -1, -1, 2, 1, 2 },
 	{ 4, 4, 4, 1, 1, 1, -1, -1, -1, 2, 1, 2 },
@@ -98,6 +99,7 @@ int lastLevel;
 int cycle;
 
 bool falling;
+bool won;
 
 
 int main( void ); //<<< main function, called at startup
@@ -109,6 +111,7 @@ bool initializeWindow(); //<<< initializes the window using GLFW and GLEW
 bool initializeMVPTransformation();
 bool initializeVertexbuffer(); //<<< initializes the vertex buffer array and binds it OpenGL
 bool cleanupVertexbuffer(); //<<< frees all recources from the vertex buffer
+void makeFinish();
 bool closeWindow(); //<<< Closes the OpenGL window and terminates GLFW
 void updataMovingObjectTransformation();
 void fall();

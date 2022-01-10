@@ -7,8 +7,11 @@ out vec3 color;
 in vec3 fNormal;
 in vec3 fPosition;
 in vec3 fLight;
+in vec3 vColor;
 // Interpolated values from the vertex shaders
-in vec2 UV;
+//in vec2 UV;
+
+int i = 0;
 
 // Values that stay constant for the whole mesh.
 uniform sampler2D myTextureSampler;
@@ -19,9 +22,14 @@ void main()
   vec3 lightDirection = normalize(fLight);
   vec3 v = normalize(fPosition);       
   vec3 N = normalize(fNormal);
+  //vec3 N2 = normalize(fNormal2);
+  
+  vec3 materialColor  = vColor;
   
   //Material parameters
-  vec3 materialColor = vec3(0.2, 0.2, 0.2);
+  //if(fPosition.x < 0.5){
+  //	materialColor = vec3(1.0, 0.2, 0.2);
+  //}
   float ka = 0.3;
   float ks = 0.2;
   float kd = 0.8;
@@ -39,13 +47,8 @@ void main()
   float Idiff = kd * max(dot(N,L), 0.0);
   Idiff = clamp(Idiff, 0.0, 1.0);     
   
-  float RE = dot(R,E);
-  
-  //color for background
-  if(RE < 0.0) RE = 0.0;
-  
   // calculate Specular Intensity:
-  float Ispec = ks * pow(RE,0.3*shininess);
+  float Ispec = ks * pow(max(dot(R,E),0.0),0.3*shininess);
   Ispec = clamp(Ispec, 0.0, 1.0); 
 
   // Compute Total Intensity:  

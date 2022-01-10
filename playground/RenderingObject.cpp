@@ -1,6 +1,7 @@
 #include "RenderingObject.h"
 #include <common/texture.hpp>
 #include <playground/parse_stl.h>
+#include <iostream>
 
 RenderingObject::RenderingObject() : texture_present(false), M(glm::mat4(1.0f))
 {
@@ -67,6 +68,21 @@ void RenderingObject::SetTexture(std::vector< glm::vec2 > uvbufferdata, std::str
   glBufferData(GL_ARRAY_BUFFER, uvbufferdata.size() * sizeof(glm::vec2), &uvbufferdata[0], GL_STATIC_DRAW);
 }
 
+void RenderingObject::SetColor(float r, float g, float b, float speed) {
+    color = glm::vec3(r, g, b);
+    int colorSize = VertexBufferSize * sizeof(glm::vec4);
+    std::vector<glm::vec4> colors;
+    for (int i = 0; i < colorSize; i++) {
+        colors.push_back(glm::vec4(r, g, b, speed));   //[i] = color;
+    }
+    glBindVertexArray(VertexArrayID);
+    glGenBuffers(1, &colorbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    glBufferData(GL_ARRAY_BUFFER, colorSize, &colors[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
+}
+
 void RenderingObject::DrawObject()
 {
   
@@ -86,12 +102,23 @@ void RenderingObject::DrawObject()
   glEnableVertexAttribArray(1);
   glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
   glVertexAttribPointer(
-    1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+    1,                  // attribute 1. No particular reason for 1, but must match the layout in the shader.
     3,                  // size
     GL_FLOAT,           // type
     GL_FALSE,           // normalized?
     0,                  // stride
     (void*)0            // array buffer offset
+  );
+
+  glEnableVertexAttribArray(2);
+  glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+  glVertexAttribPointer(
+      2,                  // attribute 2. No particular reason for 2, but must match the layout in the shader.
+      4,                  // size
+      GL_FLOAT,           // type
+      GL_FALSE,           // normalized?
+      0,                  // stride
+      (void*)0            // array buffer offset
   );
 
   if (texture_present)
@@ -106,7 +133,7 @@ void RenderingObject::DrawObject()
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
     glVertexAttribPointer(
-      2,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+      2,                                // attribute 2. No particular reason for 2, but must match the layout in the shader.
       2,                                // size : U+V => 2
       GL_FLOAT,                         // type
       GL_FALSE,                         // normalized?
@@ -136,7 +163,11 @@ void RenderingObject::LoadSTL(std::string stl_file_name)
   this->SetVertices(vertices);
   computeVertexNormalsOfTriangles(vertices, normals);
   this->SetNormals(normals);
-
+  this->SetColor(0.4, 0.4, 0.4, 0.0);
+  //for each (glm::vec3 vec3 in vertices) {
+ 
+          //std::cout << vec3.x << "\t" << vec3.y << "\t"  << vec3.z << "\n";
+  //}
 }
 
 std::vector<glm::vec3> RenderingObject::getAllTriangleNormalsForVertex(stl::point vertex, std::vector<stl::triangle> triangles)
