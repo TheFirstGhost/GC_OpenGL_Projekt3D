@@ -33,15 +33,11 @@ int main( void )
 
   initializeMVPTransformation();
 
-  curr_x = 20;
-  curr_y = 20;
-  curr_z = 21;
-
   cam_z = 200;
 
-  cycle = 0;
-
   falling = false;
+
+  gameTime = 0;
 
   // Enable depth test
   glEnable(GL_DEPTH_TEST);
@@ -69,15 +65,16 @@ int main( void )
 	return 0;
 }
 
-bool checkNextCubePos(const int dir, const int level) 
+bool checkNextCubePos(const int dir, const int level) //checks if ne next Position of the cube is posible to roll
 {
 
 	switch (dir)
 	{
 	case 1:
-		if (checkIllegalValues(vec2(world.cubePos.x, world.cubePos.y - 1))) return true;
+		if (checkIllegalValues(vec2(world.cubePos.x, world.cubePos.y - 1))) return true; //make sure that the next value is not out of range
 		else if (level == STRAIGHT) {
-			if (world.cubePos.z >= world.map[world.cubePos.x][world.cubePos.y - 1] && world.cubePos.z == world.map[world.cubePos.x - 1][world.cubePos.y - 1]) return true;
+			//
+			if (world.cubePos.z >= world.map[world.cubePos.x][world.cubePos.y - 1] && world.cubePos.z == world.map[world.cubePos.x - 1][world.cubePos.y - 1]) return true; 
 			else if (world.cubePos.z == world.map[world.cubePos.x][world.cubePos.y - 1]) return true;
 			else return false;
 		}
@@ -164,15 +161,21 @@ void updateAnimationLoop()
   // Use our shader
   glUseProgram(programID);
 
-  float timeValue = glfwGetTime();
+  frameTime = glfwGetTime() - gameTime;
+  gameTime = glfwGetTime();
+  cube.move = frameTime*100;
+  cycleTime += frameTime;
   int vertexColorLocation = glGetUniformLocation(programID, "myTime");
-  glUniform1f(vertexColorLocation, timeValue);
+  glUniform1f(vertexColorLocation, gameTime);
 
   if (falling) {
 	  cube.fall();
 	  if (cube.pos.z < -80) {
-		  falling = false;
+		  falling = false;  
 		  cube.reset();
+		  world.cubePos.x = (int)(round(cube.pos.x) / 20);
+		  world.cubePos.y = (int)(round(cube.pos.y) / 20);
+		  world.cubePos.z = (int)(round(cube.pos.z - 10) / 20);
 	  }
   }
   else if (won) {
@@ -180,45 +183,64 @@ void updateAnimationLoop()
 	  if (cube.pos.z > 100) {
 		  won = false;
 		  cube.reset();
+		  world.cubePos.x = (int)(round(cube.pos.x) / 20);
+		  world.cubePos.y = (int)(round(cube.pos.y) / 20);
+		  world.cubePos.z = (int)(round(cube.pos.z - 10) / 20);
 	  }
   }
-  else if (glfwGetKey(window, GLFW_KEY_W) && (lastKey == GLFW_KEY_W || lastKey == 0) && cycle++ < 1000) {
+  else if (glfwGetKey(window, GLFW_KEY_W) && (lastKey == GLFW_KEY_W || lastKey == 0) && cycleTime < 0.2) {
 	  if (checkNextCubePos(FORWARD, STRAIGHT)) cube.role(FORWARD);
 	  else if (checkNextCubePos(FORWARD, UP)) cube.roleUp(FORWARD);
 	  else if (checkGoDown()) cube.goDown(FORWARD);
-	  lastKey = GLFW_KEY_W;
+	  if (lastKey != GLFW_KEY_W) {
+		  lastKey = GLFW_KEY_W;
+		  cycleTime = 0;
+	  }
   }
-  else if (glfwGetKey(window, GLFW_KEY_S) && (lastKey == GLFW_KEY_S || lastKey == 0) && cycle++ < 1000) {
+  else if (glfwGetKey(window, GLFW_KEY_S) && (lastKey == GLFW_KEY_S || lastKey == 0) && cycleTime < 0.2) {
 	  if (checkNextCubePos(BACKWARD, STRAIGHT)) cube.role(BACKWARD);
 	  else if (checkNextCubePos(BACKWARD, UP)) cube.roleUp(BACKWARD);
 	  else if (checkGoDown()) cube.goDown(BACKWARD);
-	  lastKey = GLFW_KEY_S;
+	  if (lastKey != GLFW_KEY_S) {
+		  lastKey = GLFW_KEY_S;
+		  cycleTime = 0;
+	  }
   }
-  else if (glfwGetKey(window, GLFW_KEY_A) && (lastKey == GLFW_KEY_A || lastKey == 0) && cycle++ < 1000) {
+  else if (glfwGetKey(window, GLFW_KEY_A) && (lastKey == GLFW_KEY_A || lastKey == 0) && cycleTime < 0.2) {
 	  if (checkNextCubePos(LEFT, STRAIGHT)) cube.role(LEFT);
 	  else if (checkNextCubePos(LEFT, UP)) cube.roleUp(LEFT);
 	  else if (checkGoDown()) cube.goDown(LEFT);
-	  lastKey = GLFW_KEY_A;
+	  if (lastKey != GLFW_KEY_A) {
+		  lastKey = GLFW_KEY_A;
+		  cycleTime = 0;
+	  }
   }
-  else if (glfwGetKey(window, GLFW_KEY_D) && (lastKey == GLFW_KEY_D || lastKey == 0) && cycle++ < 1000) {
+  else if (glfwGetKey(window, GLFW_KEY_D) && (lastKey == GLFW_KEY_D || lastKey == 0) && cycleTime < 0.2) {
 	  if (checkNextCubePos(RIGHT, STRAIGHT)) cube.role(RIGHT);
 	  else if (checkNextCubePos(RIGHT, UP)) cube.roleUp(RIGHT);
 	  else if (checkGoDown()) cube.goDown(RIGHT);
-	  lastKey = GLFW_KEY_D;
+	  if (lastKey != GLFW_KEY_D) {
+		  lastKey = GLFW_KEY_D;
+		  cycleTime = 0;
+	  }
   }
-  //else if (glfwGetKey(window, GLFW_KEY_R)) curr_angle += 0.0005;
   else if (glfwGetKey(window, GLFW_KEY_O)) cam_z += 0.01;
   else if (glfwGetKey(window, GLFW_KEY_L)) cam_z -= 0.01;
   else {  
 	  if (cube.roleFinish()) {
-		  lastKey = 0;
-		  if (world.checkFallDown()) falling = true;
-		  else if (world.checkWin()) {
-			  std::cout << "Won\n";
-			  won = true;
-		  }
+		 //if((int)cube.pos.x % 20 == 0 && cube.pos.x > 0)
+			//cube.rot.x -= ((int) (cube.rot.x * 100) % 157) / 100;
+		 //if((int)cube.pos.y % 20 == 0 && cube.pos.y > 0)
+			//cube.rot.y -= ((int) (cube.rot.y * 100) % 157) / 100;
+		 //corect cube...
+		 lastKey = 0;
+		 if (world.checkFallDown()) falling = true;
+		 else if (world.checkWin()) {
+			 std::cout << "Won\n";
+			 won = true;
+		 }
 	  }
-	  cycle = 0;
+	  cycleTime = 0;
 	  world.cubePos.x = (int)(round(cube.pos.x) / 20);
 	  world.cubePos.y = (int)(round(cube.pos.y) / 20);
 	  world.cubePos.z = (int)(round(cube.pos.z - 10) / 20);
@@ -233,10 +255,11 @@ void updateAnimationLoop()
   initializeMVPTransformation();
   
   if (i++ == 5000) {
-      std::cout << "POS_X: " << cube.pos.y << "\n";
+      std::cout << "POS_X: " << cube.pos.x << "\n";
+	  std::cout << "POS_Y: " << cube.pos.y << "\n";
 	  //std::cout << "ROT_X: " << cube.rot.x << "\n";
-      //std::cout << "CUBE_POS_X: " << world.cubePos.x << "\n";
-      //std::cout << "CUBE_POS_Y: " << world.cubePos.y << "\n";
+      //std::cout << "CUBEPOS_X: " << world.cubePos.x << "\n";
+      //std::cout << "CUBEPOS_Y: " << world.cubePos.y << "\n";
 	  std::cout << "WORLD_CUBEPOS_Z: " << world.cubePos.z << "\n";
 	  std::cout << "CUBE_POS_Z:" << cube.pos.z << "\n";
       //std::cout << "CUBE_ROTPOS: " << cube.rotPos << "\n";
@@ -245,6 +268,8 @@ void updateAnimationLoop()
 	  std::cout << "CUBE_CURRLEVEL: " << cube.currLevel << "\n";
 	  std::cout << "LASTKEY: " << lastKey << "\n";
 	  //std::cout << "Time: " << timeValue << "\n";
+	  std::cout << "FrameTime: " << frameTime << "\n";
+	  std::cout << "CUBE_POS_x %20: " << (int)cube.pos.x % 20 << "\n";
       i = 0;
   }
   // Send our transformation to the currently bound shader, 

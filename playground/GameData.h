@@ -55,6 +55,8 @@ public:
 	int currLevel;
 	int rotPosOffset;
 
+	float move;
+
 	Cube();
 	Cube(std::shared_ptr <RenderingObject> _cubeObject, glm::vec3 _pos);
 	Cube(std::shared_ptr <RenderingObject> _cubeObject, double x, double y, double z);

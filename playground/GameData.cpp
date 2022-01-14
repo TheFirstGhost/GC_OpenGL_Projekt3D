@@ -60,7 +60,6 @@ Cube::Cube(std::shared_ptr <RenderingObject> _cubeObject, double x, double y, do
 }
 
 void Cube::role(const int direction) {
-	//lastLevel = currLevel;
 	
 	lastDirection = direction;
 	lastHight = STRAIGHT;
@@ -68,23 +67,23 @@ void Cube::role(const int direction) {
 	{
 		case FORWARD:
 			setRotPosOffset(FORWARD);
-			pos.x += 0.02; //40
-			rot.x -= 0.00157; //1.57...
+			pos.x += move; //40
+			rot.x -= 0.0785 * move; //1.57
 			break;
 		case BACKWARD:
 			setRotPosOffset(BACKWARD);
-			pos.x -= 0.02;
-			rot.x += 0.00157;
+			pos.x -= move;
+			rot.x += 0.0785 * move;
 			break;
 		case LEFT:
 			lastLevel = currLevel;
-			pos.y -= 0.02;
-			rot.y -= 0.00157;
+			pos.y -= move;
+			rot.y -= 0.0785 * move;
 			break;
 		case RIGHT:
 			lastLevel = currLevel;
-			pos.y += 0.02;
-			rot.y += 0.00157;
+			pos.y += move;
+			rot.y += 0.0785 * move;
 			break;
 		default:
 			break;
@@ -101,23 +100,23 @@ void Cube::roleUp(const int direction) {
 	{
 	case FORWARD:
 		setRotPosOffset(FORWARD);
-		pos.z += 0.02;
-		rot.x -= 0.00157;
+		pos.z += move;
+		rot.x -= 0.0785 * move;
 		break;
 	case BACKWARD:
 		setRotPosOffset(BACKWARD);
-		pos.z += 0.02;
-		rot.x += 0.00157;
+		pos.z += move;
+		rot.x += 0.0785 * move;
 		break;
 	case LEFT:
 		lastLevel = currLevel;
-		pos.z += 0.02;
-		rot.y -= 0.00157;
+		pos.z += move;
+		rot.y -= 0.0785 * move;
 		break;
 	case RIGHT:
 		lastLevel = currLevel;
-		pos.z += 0.02;
-		rot.y += 0.00157;
+		pos.z += move;
+		rot.y += 0.0785 * move;
 		break;
 	default:
 		break;
@@ -128,27 +127,27 @@ void Cube::goDown(const int direction) {
 	//setRotPosOffset();
 	lastDirection = direction;
 	lastHight = DOWN;
-	pos.z -= 0.02;
+	pos.z -= move;
 }
 
 bool Cube::roleFinish() {
 	if (lastHight == STRAIGHT) {
 		if (((int)pos.x) % 20 > 10) {
-			pos.x += 0.02;
-			rot.x -= 0.00157;
+			pos.x += move;
+			rot.x -= 0.0785 * move;
 		}
 		else if (((int)pos.x) % 20 <= 10 && ((int)pos.x) % 20 > 0) {
-			pos.x -= 0.02;
-			rot.x += 0.00157;
+			pos.x -= move;
+			rot.x += 0.0785 * move;
 		}
 
 		else if (((int)pos.y) % 20 > 10) {
-			pos.y += 0.02;
-			rot.y += 0.00157;
+			pos.y += move;
+			rot.y += 0.0785 * move;
 		}
 		else if (((int)pos.y) % 20 <= 10 && ((int)pos.y) % 20 > 0) {
-			pos.y -= 0.02;
-			rot.y -= 0.00157;
+			pos.y -= move;
+			rot.y -= 0.0785 * move;
 		}
 		else {
 			rotPos = calculateRotPos();
@@ -162,16 +161,16 @@ bool Cube::roleFinish() {
 		if (lastDirection == FORWARD) {
 			setRotPosOffset(FORWARD);
 			if (((int)pos.z - 10) % 20 > 0) {
-				pos.z -= 0.02;
-				rot.x += 0.00157;
+				pos.z -= move;
+				rot.x += 0.0785 * move;
 			}
 			else return true;
 		}
 		else if (lastDirection == BACKWARD) {
 			setRotPosOffset(BACKWARD);
 			if (((int)pos.z - 10) % 20 > 0) {
-				pos.z -= 0.02;
-				rot.x -= 0.00157;
+				pos.z -= move;
+				rot.x -= 0.0785 * move;
 			}
 			else return true;
 		}
@@ -179,8 +178,8 @@ bool Cube::roleFinish() {
 			lastLevel = currLevel;
 			if (((int)pos.z - 10) % 20 > 0) {
 				//pos.y -= 0.02;
-				pos.z -= 0.02;
-				rot.y += 0.00157;
+				pos.z -= move;
+				rot.y += 0.0785 * move;
 			}
 			else return true;
 		}
@@ -188,8 +187,8 @@ bool Cube::roleFinish() {
 			lastLevel = currLevel;
 			if (((int)pos.z - 10) % 20 > 0) {
 				//pos.y -= 0.02;
-				pos.z -= 0.02;
-				rot.y -= 0.00157;
+				pos.z -= move;
+				rot.y -= 0.0785 * move;
 			}
 			else return true;
 		}
@@ -203,22 +202,8 @@ bool Cube::roleFinish() {
 	}
 	else if (lastHight == DOWN) {
 		if (((int)pos.z-10) % 20 > 0) {
-			pos.z -= 0.02;
+			pos.z -= move;
 		}
-		//else if (((int)pos.x) % 20 <= 10 && ((int)pos.x) % 20 > 0) {
-			//pos.z += 0.02;
-		//}
-
-		/*else if (((int)pos.y) % 20 > 10) {
-			pos.y += 0.02;
-			pos.z -= 0.02;
-			rot.y += 0.00314;
-		}
-		else if (((int)pos.y) % 20 <= 10 && ((int)pos.y) % 20 > 0) {
-			pos.y -= 0.02;
-			pos.z += 0.02;
-			rot.y -= 0.00314;
-		}*/
 		else {
 			rotPos = calculateRotPos();
 			return true;
@@ -253,9 +238,6 @@ void Cube::setRotPosOffset(const int direction) {
 void Cube::fall() {
 
 	pos.z -= 0.05;
-	
-	//if (pos.z < -80) reset();
-	//std::cout << "Fall Down" << "\n";
 }
 
 void Cube::won() {
@@ -272,38 +254,3 @@ void Cube::reset() {
 	lastLevel = 1;
 	currLevel = 1;
 }
-
-/*bool Cube::checkNextCubePos(const int dir, std::shared_ptr<World> world, std::shared_ptr<Cube> cube) {
-
-	//update cube position
-	world->cubePos.x = (int)(cube->pos.x / 20);
-	world->cubePos.y = (int)(cube->pos.y / 20);
-
-	//std::cout << "cubePos_X: " << world->cubePos.x<< "\n";
-	//std::cout << "cubePos_Y: " << world->cubePos.y << "\n";
-	//std::cout << "POS_Y%20: " << ((int)pos.y) % 20 << "\n";
-
-	switch (dir)
-	{
-	case 0:
-		std::cout << "cubePos_X: " << world->cubePos.x << "\n";
-		std::cout << "cubePos_X: " << world->cubePos.y -1 << "\n";
-		if (world->cubePos.z == world->map[world->cubePos.x][world->cubePos.y - 1]) return true;
-		else return false;
-		break;
-	case 1:
-		if (world->cubePos.z == world->map[world->cubePos.x - 2][world->cubePos.y - 1]) return true;
-		else return false;
-		break;
-	case 2:
-		if (world->cubePos.z == world->map[world->cubePos.x - 1][world->cubePos.y]) return true;
-		else return false;
-		break;
-	case 3:
-		if (world->cubePos.z == world->map[world->cubePos.x - 1][world->cubePos.y - 2]) return true;
-		else return false;
-		break;
-	}
-
-	return false;
-}*/

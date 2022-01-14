@@ -94,6 +94,10 @@ float curr_angle;
 
 float cam_z;
 
+float gameTime;
+float frameTime;
+float cycleTime;
+
 int lastKey;
 int lastLevel;
 int cycle;
